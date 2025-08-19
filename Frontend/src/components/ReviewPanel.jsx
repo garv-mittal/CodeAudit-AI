@@ -1,15 +1,22 @@
 import React from "react"
 import Markdown from "react-markdown"
-import rehypeHighlight from "rehype-highlight";
+import rehypeHighlight from "rehype-highlight"
 
-function ReviewPanel({ review }) {
+function ReviewPanel({ review, loading }) {
   return (
     <div className="review-panel">
-      <Markdown
-
-            rehypePlugins={[ rehypeHighlight ]}
-
-          >{review}</Markdown>
+      <h2 className="review-heading">Code Review</h2>
+      {loading ? (
+        // 🔄 loader
+        <div className="loader-container">
+          <div className="spinner"></div>
+          <p>Analyzing your code...</p>
+        </div>
+      ) 
+      : 
+      (
+        <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
+      )}
     </div>
   )
 }

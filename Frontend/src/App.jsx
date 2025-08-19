@@ -9,13 +9,18 @@ function App() {
   return 1 + 1
 }`)
   const [review, setReview] = useState("")
+  const [loading, setLoading] = useState(false)
 
   async function reviewCode() {
     try {
-      const response = await API.post("/ai/get-review", { code })
+      setLoading(true)
+      const response = await API.post("ai/get-review", { code })
       setReview(response.data)
     } catch (error) {
       setReview("❌ Error fetching review")
+    }
+    finally {
+      setLoading(false)
     }
   }
 
@@ -26,7 +31,7 @@ function App() {
       </div>
 
       <div className="right">
-        <ReviewPanel review={review} />
+        <ReviewPanel review={review} loading={loading} />
       </div>
     </main>
   )
